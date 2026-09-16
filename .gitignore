@@ -1,0 +1,37 @@
+# Local .terraform directories (contains downloaded providers and modules)
+**/.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Terraform variables & secrets (do not commit sensitive values)
+*.tfvars
+*.tfvars.json
+override.tfvars
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Node / CDK dependencies & build output
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.*.local
+
+# Operating System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

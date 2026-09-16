@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudPulse | Next-Gen Cloud Infrastructure & Automation</title>
+    <meta name="description" content="Deploy, monitor, and scale your cloud infrastructure effortlessly with CloudPulse high-performance automation suite.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Glow Blobs -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                </div>
+                <span>Cloud<span class="gradient-text">Pulse</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#demo">Live Metrics</a>
+                <a href="#code">Infrastructure</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#code" class="btn btn-secondary">Documentation</a>
+                <a href="#demo" class="btn btn-primary">Deploy Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-badge">
+                    <span class="badge-pulse"></span>
+                    <span>v2.4 Engine Live: Zero-Downtime Multi-Region Deployments</span>
+                </div>
+                <h1 class="hero-title">
+                    Deploy Cloud Infrastructure at the <span class="gradient-text">Speed of Thought</span>
+                </h1>
+                <p class="hero-description">
+                    Automate AWS S3, EC2, Terraform state management, and serverless stacks with enterprise-grade reliability, real-time telemetry, and bulletproof security.
+                </p>
+
+                <div class="hero-cta-group">
+                    <button class="btn btn-primary btn-lg" id="getStartedBtn">
+                        <span>Get Started Free</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                    <button class="btn btn-glass btn-lg" id="viewDemoBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <span>Watch Demo</span>
+                    </button>
+                </div>
+
+                <!-- Live Metrics Bar -->
+                <div class="hero-metrics-bar">
+                    <div class="metric-card">
+                        <div class="metric-value" id="uptimeCounter">99.99%</div>
+                        <div class="metric-label">Guaranteed SLA Uptime</div>
+                    </div>
+                    <div class="metric-divider"></div>
+                    <div class="metric-card">
+                        <div class="metric-value"><span id="deployCounter">1.4M</span>+</div>
+                        <div class="metric-label">Daily Terraform Applies</div>
+                    </div>
+                    <div class="metric-divider"></div>
+                    <div class="metric-card">
+                        <div class="metric-value">&lt; 12ms</div>
+                        <div class="metric-label">Global API Latency</div>
+                    </div>
+                    <div class="metric-divider"></div>
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">IaC Compliance Rate</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Showcase Section -->
+        <section id="features" class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="sub-heading">ENGINEERED FOR DEVOPS</div>
+                    <h2 class="section-title">Everything You Need to Master Cloud Infrastructure</h2>
+                    <p class="section-desc">Streamline multi-cloud provisionings, prevent configuration drifts, and keep bucket policies secure.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        </div>
+                        <h3>Smart State Management</h3>
+                        <p>Lock state files with DynamoDB automatic concurrency safeguards and S3 bucket versioning out of the box.</p>
+                        <a href="#" class="feature-link">Explore Terraform Integration &rarr;</a>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-cyan">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        </div>
+                        <h3>Zero-Trust S3 Guard</h3>
+                        <p>Enforce strict access controls, server-side AES-256 bucket encryption, and real-time security auditing.</p>
+                        <a href="#" class="feature-link">View Security Standards &rarr;</a>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon icon-emerald">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                        <h3>Real-Time Telemetry</h3>
+                        <p>Track request latencies, bucket ops counters, and compute usage through low-latency telemetry dashboards.</p>
+                        <a href="#" class="feature-link">See Monitoring Specs &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Metrics Interactive Dashboard Section -->
+        <section id="demo" class="demo-section">
+            <div class="container">
+                <div class="glass-container dashboard-wrapper">
+                    <div class="dashboard-header">
+                        <div class="dashboard-title">
+                            <div class="status-indicator active"></div>
+                            <span>Active Node Cluster: <strong>AWS ap-south-1 (Mumbai)</strong></span>
+                        </div>
+                        <div class="dashboard-controls">
+                            <button class="chip active" id="filterAll">All Resources</button>
+                            <button class="chip" id="filterS3">S3 Buckets</button>
+                            <button class="chip" id="filterEC2">EC2 Stacks</button>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Widget 1: Infrastructure Health -->
+                        <div class="dash-widget">
+                            <div class="widget-head">
+                                <span>Bucket Storage Usage</span>
+                                <span class="badge badge-success">Optimal</span>
+                            </div>
+                            <div class="widget-body">
+                                <div class="progress-info">
+                                    <span>my-kishor-bucket-zdh2gign-123</span>
+                                    <span id="storagePercent">68%</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar-fill" style="width: 68%;"></div>
+                                </div>
+                                <div class="widget-stats">
+                                    <div><span>Total Objects:</span> <strong>14,290</strong></div>
+                                    <div><span>Encryption:</span> <strong>AES-256</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Widget 2: Live Activity Feed -->
+                        <div class="dash-widget">
+                            <div class="widget-head">
+                                <span>Recent Terraform Actions</span>
+                                <button class="btn-text" id="refreshFeed">Refresh</button>
+                            </div>
+                            <div class="widget-body">
+                                <ul class="activity-list" id="activityList">
+                                    <li>
+                                        <span class="dot green"></span>
+                                        <div class="activity-detail">
+                                            <strong>aws_s3_bucket.demobucket</strong>
+                                            <span>State refreshed successfully • 2s ago</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="dot blue"></span>
+                                        <div class="activity-detail">
+                                            <strong>aws_s3_object.demo_file</strong>
+                                            <span>Uploaded kishor/hello.txt • 14s ago</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="dot purple"></span>
+                                        <div class="activity-detail">
+                                            <strong>random_string.bucket_name</strong>
+                                            <span>Generated hash [zDh2gIGN] • 1m ago</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Snippet Viewer Section -->
+        <section id="code" class="code-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="sub-heading">DECLARATIVE INFRASTRUCTURE</div>
+                    <h2 class="section-title">Readable. Reproducible. Production-Ready.</h2>
+                </div>
+
+                <div class="code-window glass-card">
+                    <div class="window-bar">
+                        <div class="window-dots">
+                            <span class="dot-red"></span>
+                            <span class="dot-yellow"></span>
+                            <span class="dot-green"></span>
+                        </div>
+                        <div class="window-tabs">
+                            <button class="tab-btn active" data-tab="tf">main.tf</button>
+                            <button class="tab-btn" data-tab="vars">variables.tf</button>
+                            <button class="tab-btn" data-tab="out">outputs.tf</button>
+                        </div>
+                        <button class="copy-btn" id="copyCodeBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>Copy Code</span>
+                        </button>
+                    </div>
+
+                    <div class="code-content">
+<pre id="codeBlock" class="hljs"><code><span class="hljs-keyword">resource</span> <span class="hljs-string">"random_string"</span> <span class="hljs-string">"bucket_name"</span> {
+  <span class="hljs-attr">length</span>  = <span class="hljs-number">8</span>
+  <span class="hljs-attr">special</span> = <span class="hljs-literal">false</span>
+  <span class="hljs-attr">upper</span>   = <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-keyword">resource</span> <span class="hljs-string">"aws_s3_bucket"</span> <span class="hljs-string">"demobucket"</span> {
+  <span class="hljs-attr">bucket</span>        = <span class="hljs-string">"my-kishor-bucket-${lower(random_string.bucket_name.result)}-123"</span>
+  <span class="hljs-attr">force_destroy</span> = <span class="hljs-literal">true</span>
+
+  <span class="hljs-title">tags</span> = {
+    <span class="hljs-attr">Name</span> = <span class="hljs-string">"my-kishor-bucket-staticweb"</span>
+  }
+}
+
+<span class="hljs-keyword">resource</span> <span class="hljs-string">"aws_s3_object"</span> <span class="hljs-string">"demo_file"</span> {
+  <span class="hljs-attr">bucket</span> = aws_s3_bucket.demobucket.id
+  <span class="hljs-attr">key</span>    = <span class="hljs-string">"/kishor/index.html"</span>
+  <span class="hljs-attr">source</span> = <span class="hljs-string">"./index.html"</span>
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-card glass-card">
+                    <h2>Ready to elevate your cloud workflow?</h2>
+                    <p>Start managing your AWS infrastructure with confidence and modern automation tools today.</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary btn-lg">Launch Free Trial</button>
+                        <button class="btn btn-glass btn-lg">Schedule Platform Demo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <div class="brand">
+                    <div class="brand-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                    </div>
+                    <span>Cloud<span class="gradient-text">Pulse</span></span>
+                </div>
+                <p>Next-generation Infrastructure as Code orchestration platform.</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-group">
+                    <h4>Product</h4>
+                    <a href="#">S3 Automation</a>
+                    <a href="#">State Locking</a>
+                    <a href="#">Security Audits</a>
+                </div>
+                <div class="link-group">
+                    <h4>Resources</h4>
+                    <a href="#">Terraform Modules</a>
+                    <a href="#">AWS CDK Guide</a>
+                    <a href="#">API Docs</a>
+                </div>
+                <div class="link-group">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 CloudPulse Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JS Script -->
+    <script>
+        // Interactive Tab Switching
+        const tabs = {
+            tf: `<span class="hljs-keyword">resource</span> <span class="hljs-string">"random_string"</span> <span class="hljs-string">"bucket_name"</span> {
+  <span class="hljs-attr">length</span>  = <span class="hljs-number">8</span>
+  <span class="hljs-attr">special</span> = <span class="hljs-literal">false</span>
+  <span class="hljs-attr">upper</span>   = <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-keyword">resource</span> <span class="hljs-string">"aws_s3_bucket"</span> <span class="hljs-string">"demobucket"</span> {
+  <span class="hljs-attr">bucket</span>        = <span class="hljs-string">"my-kishor-bucket-\${lower(random_string.bucket_name.result)}-123"</span>
+  <span class="hljs-attr">force_destroy</span> = <span class="hljs-literal">true</span>
+
+  <span class="hljs-title">tags</span> = {
+    <span class="hljs-attr">Name</span> = <span class="hljs-string">"my-kishor-bucket-staticweb"</span>
+  }
+}
+
+<span class="hljs-keyword">resource</span> <span class="hljs-string">"aws_s3_object"</span> <span class="hljs-string">"demo_file"</span> {
+  <span class="hljs-attr">bucket</span> = aws_s3_bucket.demobucket.id
+  <span class="hljs-attr">key</span>    = <span class="hljs-string">"/kishor/index.html"</span>
+  <span class="hljs-attr">source</span> = <span class="hljs-string">"./index.html"</span>
+}`,
+            vars: `<span class="hljs-keyword">variable</span> <span class="hljs-string">"aws_region"</span> {
+  <span class="hljs-attr">type</span>        = <span class="hljs-string">string</span>
+  <span class="hljs-attr">default</span>     = <span class="hljs-string">"ap-south-1"</span>
+  <span class="hljs-attr">description</span> = <span class="hljs-string">"The primary AWS region for bucket deployment"</span>
+}
+
+<span class="hljs-keyword">variable</span> <span class="hljs-string">"environment"</span> {
+  <span class="hljs-attr">type</span>        = <span class="hljs-string">string</span>
+  <span class="hljs-attr">default</span>     = <span class="hljs-string">"production"</span>
+}`,
+            out: `<span class="hljs-keyword">output</span> <span class="hljs-string">"bucket_arn"</span> {
+  <span class="hljs-attr">value</span>       = aws_s3_bucket.demobucket.arn
+  <span class="hljs-attr">description</span> = <span class="hljs-string">"The ARN of the static web S3 bucket"</span>
+}
+
+<span class="hljs-keyword">output</span> <span class="hljs-string">"bucket_domain_name"</span> {
+  <span class="hljs-attr">value</span>       = aws_s3_bucket.demobucket.bucket_regional_domain_name
+}`
+        };
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const key = btn.getAttribute('data-tab');
+                document.getElementById('codeBlock').innerHTML = tabs[key];
+            });
+        });
+
+        // Copy button
+        document.getElementById('copyCodeBtn').addEventListener('click', () => {
+            const codeText = document.getElementById('codeBlock').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btnSpan = document.querySelector('#copyCodeBtn span');
+                btnSpan.innerText = 'Copied!';
+                setTimeout(() => { btnSpan.innerText = 'Copy Code'; }, 2000);
+            });
+        });
+
+        // Chip Filters
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
+
+        // Activity Feed Refresh simulation
+        document.getElementById('refreshFeed').addEventListener('click', () => {
+            const list = document.getElementById('activityList');
+            const newLog = document.createElement('li');
+            newLog.innerHTML = `
+                <span class="dot green"></span>
+                <div class="activity-detail">
+                    <strong>aws_s3_bucket.demobucket</strong>
+                    <span>Health probe verified • Just now</span>
+                </div>
+            `;
+            list.prepend(newLog);
+            if(list.children.length > 4) list.removeChild(list.lastChild);
+        });
+    </script>
+</body>
+</html>

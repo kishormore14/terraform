@@ -67,11 +67,48 @@ resource "aws_route_table_association" "my-route-table_association_for_my-vpc_pu
     route_table_id = aws_route_table.my-route-table_for_my-vpc.id
 }
 
+# Security group for web server
+resource "aws_security_group" "web_sg" {
+  name        = "my-web-server-sg"
+  description = "Allow HTTP and outbound traffic"
+  vpc_id      = aws_vpc.my-vpc.id
+
+  ingress {
+    description = "Allow HTTP inbound"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all outbound traffic for package updates"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "my-web-server-sg"
+  }
+}
+
 resource "aws_instance" "web-server" {
-  ami = "ami-098f18a6382fb4b2d"
-  instance_type = "t3.micro"
-  subnet_id = aws_subnet.my-public-subnet_for_my-vpc.id
+  ami                         = "ami-098f18a6382fb4b2d"
+  instance_type               = "t3.micro"
+  subnet_id                   = aws_subnet.my-public-subnet_for_my-vpc.id
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
+
+  user_data = templatefile("${path.module}/templates/user_data.sh.tftpl", {
+    app_name    = "My-Web-App"
+    environment = "production"
+    nginx_port  = 80
+  })
+
+  user_data_replace_on_change = true
+
   tags = {
     Name = "my-web-server-in-vpc"
   }

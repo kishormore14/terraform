@@ -1,0 +1,12 @@
+users:
+  - username: raju
+    policy: [AmazonSSMFullAccess,AmazonS3FullAccess,AmazonEC2FullAccess]
+
+  - username: sham
+    policy: [AmazonS3FullAccess]
+
+  - username: mohan
+    policy: [AmazonEC2FullAccess]
+
+  - username: sita
+    policy: [AmazonS3ReadOnlyAccess]

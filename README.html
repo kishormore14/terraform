@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaito Nexus On-Prem Infra Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent-cyan: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-amber: #fbbf24;
+      --accent-rose: #f43f5e;
+      --border-color: #334155;
+      --code-bg: #090d16;
+      --table-header-bg: #1e293b;
+      --table-row-even: #131c2e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-left: 4px solid var(--accent-cyan);
+      padding-left: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #cbd5e1;
+    }
+
+    strong {
+      color: #f8fafc;
+    }
+
+    .alert {
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      border: 1px solid transparent;
+    }
+
+    .alert-important {
+      background: rgba(251, 191, 36, 0.1);
+      border-color: rgba(251, 191, 36, 0.3);
+      color: #fef08a;
+    }
+
+    .alert-note {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #bae6fd;
+    }
+
+    .alert-warning {
+      background: rgba(244, 63, 94, 0.1);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #fecdd3;
+    }
+
+    .alert-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      background: rgba(15, 23, 42, 0.8);
+      color: #38bdf8;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      position: relative;
+    }
+
+    pre code {
+      background: transparent;
+      color: #e2e8f0;
+      padding: 0;
+      border: none;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      color: var(--accent-cyan);
+      font-weight: 600;
+      padding: 1rem 1.25rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    td {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      color: #cbd5e1;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--table-row-even);
+    }
+
+    tr:hover {
+      background-color: rgba(51, 65, 85, 0.5);
+    }
+
+    ol, ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #cbd5e1;
+    }
+
+    li {
+      margin-bottom: 0.75rem;
+    }
+
+    li::marker {
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-done {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    .badge-once {
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 2.5rem 0;
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>kaito-nexus-onprem-infra</h1>
+      <p class="subtitle">
+        Terraform scripts that build a complete Nexus environment inside a client's own cloud account:
+        network, database, document storage, secrets, entry point, software, and identity service.
+      </p>
+    </header>
+
+    <div class="alert alert-important">
+      <div class="alert-icon">⚠️</div>
+      <div>
+        <strong>Important Location Notice:</strong><br>
+        Documents live in <code>kaito-mywork/docs/changes/</code>, not in this repository. Start with the High Level Design, then the AWS Low Level Design. <code>dev-account-setup.md</code> explains how to create and prepare the development AWS account.
+      </div>
+    </div>
+
+    <h2>Amazon Only</h2>
+    <p>
+      <code>aws/</code> is the only cloud folder, and it is the only one being built. There is no <code>azure/</code> or <code>gcp/</code> folder, because an empty folder claims something exists that does not. If a second cloud is ever needed, it becomes a sibling of <code>aws/</code> and the expensive part is the resources inside it, not the move.
+    </p>
+
+    <h2>What is Where</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Folder</th>
+            <th>What it is</th>
+            <th>Lifetime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>aws/bootstrap/</code></td>
+            <td>Creates the bucket that holds Terraform's records. Run once, before anything else, because Terraform cannot create the place it keeps its own record.</td>
+            <td><span class="badge badge-once">Once</span></td>
+          </tr>
+          <tr>
+            <td><code>aws/network/</code></td>
+            <td>The private network, the three web addresses and the certificate.</td>
+            <td>Long-lived, rarely changed</td>
+          </tr>
+          <tr>
+            <td><code>aws/data/</code></td>
+            <td>The database and the document store — the two things that hold information and could not be recreated if lost. <strong>The second step of removal.</strong></td>
+            <td>Long-lived, must survive</td>
+          </tr>
+          <tr>
+            <td><code>aws/platform/</code></td>
+            <td>Everything else: the entry point, the servers, the software, the sign-in service. <strong>The first step of removal.</strong></td>
+            <td>Disposable, changes on release</td>
+          </tr>
+          <tr>
+            <td><code>shared/realm/</code></td>
+            <td>Sets up the identity service: the sealed set of users, the two registered programs, the roles, the first administrator. <strong>No Amazon names in here, ever.</strong></td>
+            <td>Shared configuration</td>
+          </tr>
+          <tr>
+            <td><code>shared/app-settings/</code></td>
+            <td>Builds the list of settings handed to the software when it starts. <strong>No Amazon names in here, ever.</strong></td>
+            <td>Shared configuration</td>
+          </tr>
+          <tr>
+            <td><code>tenants/</code></td>
+            <td>The only client-specific files. Settings only — no instructions, and never a secret.</td>
+            <td>Client settings</td>
+          </tr>
+          <tr>
+            <td><code>scripts/</code></td>
+            <td>The things Terraform does not do: the daily build and teardown, the removal proof report, the secret hand-back.</td>
+            <td>Automation scripts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-note">
+      <div class="alert-icon">💡</div>
+      <div>
+        <strong>Why three folders and not two?</strong> A database needs a network to sit in, and the platform needs to know where the database is. With two folders that is a circle. Three breaks it, and the split matches how long each part actually lives: the network is cheap to keep, the data must survive, the platform is replaced constantly.
+      </div>
+    </div>
+
+    <p>
+      <code>shared/</code> holds the two parts that would be identical on any cloud. With one cloud it is a module used once, which is a little indirection for no immediate gain. It is kept because it enforces the rule above — if an Amazon name ever appears in either, something has gone wrong.
+    </p>
+
+    <h2>Running It</h2>
+    <p>Two commands, the same two for every client and every environment.</p>
+
+<pre><code><span style="color:#7dd3fc">make bootstrap</span> TENANT=acme ENV=production   <span style="color:#64748b"># once — creates the record store</span>
+<span style="color:#7dd3fc">make apply</span>     TENANT=acme ENV=production   <span style="color:#64748b"># network, then data, then platform</span></code></pre>
+
+    <div class="alert alert-note">
+      <div class="alert-icon">ℹ️</div>
+      <div>
+        <strong>Expect the first run to stop.</strong> The <code>network</code> layer waits for the client to point their web address at the new zone before the certificate can be issued. That is the internet's address system, not a fault. Give it the name servers the layer prints, wait for them to take effect, and run again.
+      </div>
+    </div>
+
+    <p>
+      Between the <code>data</code> layer and the <code>platform</code> layer the pipeline runs one more thing: a small task <strong>inside</strong> the network that creates the two databases, their users and the two extensions. Terraform cannot do it, because the database is private and Terraform runs from outside. See <code>aws/data/db-setup.md</code>.
+    </p>
+
+    <p>Removal is two deliberate steps:</p>
+
+<pre><code><span style="color:#7dd3fc">make remove-1</span> TENANT=acme ENV=production    <span style="color:#64748b"># safe. Cannot reach the data.</span>
+<span style="color:#7dd3fc">make remove-2</span> TENANT=acme ENV=production    <span style="color:#64748b"># destroys it. After the waiting period.</span>
+<span style="color:#7dd3fc">make proof</span>    TENANT=acme                   <span style="color:#64748b"># what is left, read from the account</span></code></pre>
+
+    <h2>Rules That Are Not Negotiable</h2>
+    <ol>
+      <li><strong>One client environment per run, one record per environment.</strong> Never a loop over clients. A mistake on one client must not be able to reach another.</li>
+      <li><strong>Nothing under <code>aws/</code> or <code>shared/</code> is ever edited for one client.</strong> If a client's request makes you want to, it belongs in their settings file, or it is a request to refuse.</li>
+      <li><strong>No secret in a settings file.</strong> Every password and key is generated during the install and written straight into the client's secret store.</li>
+      <li><strong>Data is retained, not destroyed.</strong> The everyday teardown cannot reach the database or the documents — that is why they live in <code>aws/data/</code> with their own record.</li>
+      <li><strong>The run refuses to execute against any account other than the one in the settings file.</strong></li>
+      <li><strong>Everything carries the four tags</strong> — client, environment, managed-by, release. The proof that a removal was complete is a tag query, and it only works if this holds.</li>
+    </ol>
+
+    <h2>Status</h2>
+    <p>
+      <strong>All eleven slices are written and pass <code>terraform validate</code>.</strong> That means the code parses, is internally consistent, and the providers resolve. It does <strong>not</strong> mean it builds — there is no AWS account yet, so nothing has been run through <code>plan</code> or <code>apply</code>. Expect the first person with an account to find things.
+    </p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Slice</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>0</code> · Workshop</td><td><span class="badge badge-done">Done</span> — <code>make validate</code> and <code>make fmt</code> work</td></tr>
+          <tr><td><code>1</code> · Settings contract</td><td><span class="badge badge-done">Done</span> — 40 settings with defaults and rules</td></tr>
+          <tr><td><code>2</code> · Network, addresses, certificate, secrets</td><td><span class="badge badge-done">Done</span> — 36 resources</td></tr>
+          <tr><td><code>3</code> · Database and document store</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>4</code> · Entry point, Beanstalk hosting, settings, alarms</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>5</code> · Machine hosting, both layouts</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>6</code> · Object storage hosting for the screens</td><td><span class="badge badge-done">Done</span> — written, switched off</td></tr>
+          <tr><td><code>7</code> · The sign-in service and its realm</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>8</code> · Application settings and the schema job</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>9</code> · Software store access, three ways</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>10</code> · Removal, proof report, guardrails</td><td><span class="badge badge-done">Done</span></td></tr>
+          <tr><td><code>11</code> · Acceptance tests</td><td><span class="badge badge-done">Done</span> — <code>tests/acceptance.md</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+<pre><code><span style="color:#7dd3fc">make validate</span>    <span style="color:#64748b"># needs no account</span>
+<span style="color:#7dd3fc">make fmt</span></code></pre>
+
+    <h2>The Daily Cycle, Once an Account Exists</h2>
+
+<pre><code><span style="color:#7dd3fc">make dev-up</span>   TENANT=dev    <span style="color:#64748b"># network, data, platform — 8 to 12 minutes</span>
+<span style="color:#7dd3fc">make dev-down</span> TENANT=dev    <span style="color:#64748b"># tears it all down again</span></code></pre>
+
+    <p>
+      An environment left running overnight and at weekends costs roughly three times what it costs during working hours, and nobody is using it. <code>dev-down</code> <strong>deletes the database</strong> — that is right for development and wrong everywhere else. It keeps the DNS zone and the certificate, because recreating the zone changes its name servers and would mean re-delegating the web address every morning.
+    </p>
+
+    <div class="alert alert-warning">
+      <div class="alert-icon">🛑</div>
+      <div>
+        <strong>Teardown Safety Guardrail:</strong> It refuses to run against any account except the one named in <code>KAITO_DEV_ACCOUNT</code> or <code>tenants/&lt;tenant&gt;/dev-account</code>. A teardown script that works anywhere is a loaded gun.
+      </div>
+    </div>
+
+    <h2>AWS Services & File/Folder Mapping</h2>
+    <p>Detailed mapping of which file and folder within this repository creates each specific AWS service:</p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>AWS Service</th>
+            <th>File / Folder Location</th>
+            <th>What It Creates & Manages</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Amazon S3 (State)</code></td>
+            <td><code>aws/bootstrap/main.tf</code></td>
+            <td>S3 Bucket created once to store Terraform <code>.tfstate</code> backend files.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon VPC</code></td>
+            <td><code>aws/network/vpc.tf</code></td>
+            <td>VPC, Public/Private Subnets, NAT Gateways, Internet Gateway, and Route Tables.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon Route 53</code></td>
+            <td><code>aws/network/route53.tf</code></td>
+            <td>DNS Hosted Zone for client web domain mapping.</td>
+          </tr>
+          <tr>
+            <td><code>AWS ACM</code></td>
+            <td><code>aws/network/acm.tf</code></td>
+            <td>SSL/TLS Domain Certificate request and validation.</td>
+          </tr>
+          <tr>
+            <td><code>Security Groups</code></td>
+            <td><code>aws/network/security_groups.tf</code></td>
+            <td>Network firewall rules between ALB, app servers, and database.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon RDS</code></td>
+            <td><code>aws/data/rds.tf</code></td>
+            <td>PostgreSQL Relational Database cluster in private subnets.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon S3 (Documents)</code></td>
+            <td><code>aws/data/storage.tf</code></td>
+            <td>Permanent client document storage bucket with deletion retention.</td>
+          </tr>
+          <tr>
+            <td><code>AWS KMS</code></td>
+            <td><code>aws/data/kms.tf</code> & <code>aws/platform/secrets.tf</code></td>
+            <td>Customer-managed encryption keys (CMK) and key aliases.</td>
+          </tr>
+          <tr>
+            <td><code>Application Load Balancer</code></td>
+            <td><code>aws/platform/loadbalancer.tf</code> & <code>targetgroups.tf</code></td>
+            <td>ALB, HTTP/HTTPS Listener rules, and target groups for app & auth routing.</td>
+          </tr>
+          <tr>
+            <td><code>Elastic Beanstalk / EC2</code></td>
+            <td><code>aws/platform/machines.tf</code></td>
+            <td>Elastic Beanstalk hosting environment, EC2 instances, Launch Templates, and Auto Scaling.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon CloudFront & S3</code></td>
+            <td><code>aws/platform/screens.tf</code></td>
+            <td>S3 bucket and CloudFront CDN distribution for static front-end screens.</td>
+          </tr>
+          <tr>
+            <td><code>AWS Secrets Manager</code></td>
+            <td><code>aws/platform/secrets.tf</code> & <code>identity.tf</code></td>
+            <td>Generated DB passwords, admin tokens, and session keys stored directly in AWS.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon ECR</code></td>
+            <td><code>aws/platform/registry.tf</code></td>
+            <td>Container image registry, mirror repository, and lifecycle policies.</td>
+          </tr>
+          <tr>
+            <td><code>AWS IAM</code></td>
+            <td><code>aws/platform/iam.tf</code></td>
+            <td>IAM Roles, Instance Profiles, and policy attachments for EC2, Beanstalk, ECR, and SSM.</td>
+          </tr>
+          <tr>
+            <td><code>Amazon CloudWatch</code></td>
+            <td><code>aws/platform/logs.tf</code></td>
+            <td>CloudWatch Log Groups for application, auth, and schema runner logs.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Start-to-End Creation & Execution Flow</h2>
+    <p>How the environment is created sequentially from start to finish, which file runs first, what each step does, and what happens next:</p>
+
+    <div style="display: flex; flex-direction: column; gap: 1.25rem; margin: 1.5rem 0;">
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+        <div style="color: var(--accent-cyan); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">
+          Step 0 · Syntax & Contract Validation (Runs First - Offline)
+        </div>
+        <div style="font-size: 0.92rem; color: #cbd5e1;">
+          <strong>Command:</strong> <code>make validate</code> &bull; <strong>File:</strong> <code>validate.ps1</code><br>
+          Validates that all 11 Terraform slices parse correctly, providers resolve, and required settings files exist in <code>tenants/&lt;TENANT&gt;/&lt;ENV&gt;.tfvars</code> without needing an AWS account.
+        </div>
+      </div>
+
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+        <div style="color: #c084fc; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">
+          Step 1 · Remote State Bootstrap (Run Once Before Everything)
+        </div>
+        <div style="font-size: 0.92rem; color: #cbd5e1;">
+          <strong>Command:</strong> <code>make bootstrap TENANT=acme ENV=production</code> &bull; <strong>Folder:</strong> <code>aws/bootstrap/</code><br>
+          Creates the dedicated Amazon S3 bucket to hold Terraform's state records (`.tfstate`). Terraform cannot store its state file in S3 until this bucket exists.
+        </div>
+      </div>
+
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+        <div style="color: #38bdf8; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">
+          Step 2 · Network Infrastructure Setup (Layer 1)
+        </div>
+        <div style="font-size: 0.92rem; color: #cbd5e1;">
+          <strong>Command:</strong> <code>make network TENANT=acme ENV=production</code> &bull; <strong>Folder:</strong> <code>aws/network/</code><br>
+          Provisions the private VPC, subnets, NAT Gateway, Route 53 DNS zone, and ACM SSL certificate.<br>
+          <span style="color: #fbbf24;">⚠️ <strong>Pause Condition:</strong> The run waits here for the client to point their domain name servers to Route 53 so ACM can issue the SSL certificate.</span>
+        </div>
+      </div>
+
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+        <div style="color: #4ade80; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">
+          Step 3 · Persistent Data Layer & DB Task (Layer 2)
+        </div>
+        <div style="font-size: 0.92rem; color: #cbd5e1;">
+          <strong>Command:</strong> <code>make data TENANT=acme ENV=production</code> &bull; <strong>Folder:</strong> <code>aws/data/</code><br>
+          Provisions the private PostgreSQL RDS database, S3 document storage, and KMS encryption keys.<br>
+          <strong>Internal Task:</strong> Executes <code>aws/data/db-setup.md</code> inside the private VPC to create DB users, schemas, and extensions.
+        </div>
+      </div>
+
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+        <div style="color: #818cf8; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">
+          Step 4 · Application & Platform Layer (Layer 3)
+        </div>
+        <div style="font-size: 0.92rem; color: #cbd5e1;">
+          <strong>Command:</strong> <code>make platform TENANT=acme ENV=production</code> (or <code>make apply</code> for full chain)<br>
+          <strong>Folder:</strong> <code>aws/platform/</code><br>
+          Deploys ALB load balancers, Elastic Beanstalk/EC2 hosting, ECR registries, CloudFront CDN, Secrets Manager secrets, IAM roles, and CloudWatch logging. Connects application servers to network & database layers.
+        </div>
+      </div>
+
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+        <div style="color: #f43f5e; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">
+          Step 5 · Controlled Teardown & Removal Proof
+        </div>
+        <div style="font-size: 0.92rem; color: #cbd5e1;">
+          <strong>Safe Teardown:</strong> <code>make remove-1</code> (Tears down disposable platform servers, leaves DB intact)<br>
+          <strong>Complete Removal:</strong> <code>make remove-2</code> (Destroys database & network after client confirmation)<br>
+          <strong>Proof Audit:</strong> <code>make proof</code> &bull; Runs <code>scripts/removal-proof.sh</code> to verify zero resources remain tagged in AWS.
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Formatted Infra Documentation &bull; Kaito Nexus Infrastructure
+    </footer>
+  </div>
+
+</body>
+</html>

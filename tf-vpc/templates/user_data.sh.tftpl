@@ -1,0 +1,55 @@
+#!/bin/bash
+set -euo pipefail
+
+# Log all user data execution output
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
+echo "Starting deployment for ${app_name} in ${environment} environment..."
+
+# Install Nginx package cleanly
+if command -v dnf &> /dev/null; then
+    dnf update -y
+    dnf install -y nginx
+elif command -v amazon-linux-extras &> /dev/null; then
+    amazon-linux-extras install -y nginx1
+else
+    yum update -y
+    yum install -y nginx
+fi
+
+# Create index page template
+cat << 'EOF' > /usr/share/nginx/html/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to ${app_name}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; text-align: center; padding-top: 60px; }
+        .card { background: #1e293b; display: inline-block; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 1px solid #334155; }
+        h1 { color: #38bdf8; margin-bottom: 8px; }
+        p { color: #94a3b8; font-size: 18px; }
+        .badge { background: #0284c7; color: white; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🚀 Web Server Active</h1>
+        <p>Managed via Terraform &amp; User Data Template</p>
+        <p>Application: <strong style="color: #f8fafc;">${app_name}</strong></p>
+        <p>Environment: <span class="badge">${environment}</span></p>
+        <p>Target Port: <strong style="color: #f8fafc;">${nginx_port}</strong></p>
+    </div>
+</body>
+</html>
+EOF
+
+# Start and enable Nginx
+systemctl enable --now nginx
+
+# Health check verification
+if systemctl is-active --quiet nginx; then
+    echo "Nginx successfully installed and running on port ${nginx_port}."
+else
+    echo "Nginx service failed to start!" >&2
+    exit 1
+fi
